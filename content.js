@@ -1,6 +1,8 @@
+const dataAttrName = "data-zenn-mode";
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "preformAction") {
-    alert("click popup button !");
+  if (request.action === "modeToggle") {
+    toggleState();
   }
 });
 
@@ -55,4 +57,19 @@ function hideAd() {
       }
     }
   }
+}
+
+function toggleState() {
+  const body = document.body;
+  if (isZennMode()) {
+    body.setAttribute(dataAttrName, false);
+  } else {
+    body.setAttribute(dataAttrName, true);
+  }
+}
+
+function isZennMode() {
+  const body = document.body;
+  const zennMode = body.getAttribute(dataAttrName);
+  return zennMode === "true";
 }
